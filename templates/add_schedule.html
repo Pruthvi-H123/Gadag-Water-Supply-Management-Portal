@@ -9,11 +9,7 @@
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
   <div class="card">
     <div class="card-head"><h3><i class="fas fa-plus-circle" style="color:#0e63d2;"></i> Add New Schedule</h3></div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}{% for cat,msg in messages %}
-      <div class="flash-msg flash-{{ cat }}"><i class="fas fa-info-circle"></i> {{ msg }}</div>
-      {% endfor %}{% endif %}
-    {% endwith %}
+   
     <form method="POST">
       <div class="field-group">
         <label class="field-label">Select Ward</label>

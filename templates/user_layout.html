@@ -15,7 +15,6 @@
 
     <!-- ── TOP NAVBAR ── -->
     <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:#fff;border-radius:16px;margin-bottom:1.5rem;box-shadow:0 2px 15px rgba(0,0,0,0.06);border:1px solid #f0f4ff;">
-      <!-- Left: Greeting -->
       <div style="display:flex;align-items:center;gap:10px;">
         <div style="width:36px;height:36px;background:linear-gradient(135deg,#0e63d2,#00b48c);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.9rem;">
           <i class="fas fa-water"></i>
@@ -25,43 +24,44 @@
           <p style="font-size:0.875rem;font-weight:700;color:#0a1628;">Welcome, {{ session.name or 'Citizen' }}!</p>
         </div>
       </div>
-      <!-- Right: Profile & Logout -->
       <div style="display:flex;align-items:center;gap:0.75rem;">
-        <!-- Profile Button -->
-        <a href="/profile" style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:#f8faff;border-radius:10px;border:1px solid #e8eef8;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='#0e63d2'" onmouseout="this.style.borderColor='#e8eef8'">
+        <a href="/profile" style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:#f8faff;border-radius:10px;border:1px solid #e8eef8;text-decoration:none;" onmouseover="this.style.borderColor='#0e63d2'" onmouseout="this.style.borderColor='#e8eef8'">
           <div style="width:32px;height:32px;background:linear-gradient(135deg,#0e63d2,#00b48c);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.85rem;">
             {{ (session.name or 'U')[0].upper() }}
           </div>
-
-         
-        <a href="/notifications" style="position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f8faff;border-radius:10px;border:1px solid #e8eef8;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='#0e63d2'" onmouseout="this.style.borderColor='#e8eef8'">
+          <div>
+            <p style="font-size:0.82rem;font-weight:700;color:#0a1628;">{{ session.name or 'Citizen' }}</p>
+            <p style="font-size:0.68rem;color:#9ab0cc;">Citizen Account</p>
+          </div>
+        </a>
+        <a href="/notifications" style="position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f8faff;border-radius:10px;border:1px solid #e8eef8;text-decoration:none;" onmouseover="this.style.borderColor='#0e63d2'" onmouseout="this.style.borderColor='#e8eef8'">
           <i class="fas fa-bell" style="color:#0e63d2;font-size:1rem;"></i>
           {% if unread_count > 0 %}
           <span style="position:absolute;top:-5px;right:-5px;background:#dc3232;color:#fff;font-size:0.6rem;font-weight:800;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">{{ unread_count }}</span>
           {% endif %}
         </a>
-        <div>
-            <p style="font-size:0.82rem;font-weight:700;color:#0a1628;">{{ session.name or 'Citizen' }}</p>
-            <p style="font-size:0.68rem;color:#9ab0cc;">Citizen Account</p>
-          </div>
-        </a>
-        <!-- Logout Button -->
-        <a href="/logout" style="display:flex;align-items:center;gap:7px;padding:9px 16px;background:rgba(220,50,50,0.08);border:1.5px solid rgba(220,50,50,0.2);border-radius:10px;color:#dc3232;font-weight:700;font-size:0.82rem;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(220,50,50,0.15)'" onmouseout="this.style.background='rgba(220,50,50,0.08)'">
+        <a href="/logout" style="display:flex;align-items:center;gap:7px;padding:9px 16px;background:rgba(220,50,50,0.08);border:1.5px solid rgba(220,50,50,0.2);border-radius:10px;color:#dc3232;font-weight:700;font-size:0.82rem;text-decoration:none;" onmouseover="this.style.background='rgba(220,50,50,0.15)'" onmouseout="this.style.background='rgba(220,50,50,0.08)'">
           <i class="fas fa-sign-out-alt"></i> Logout
         </a>
       </div>
     </div>
 
+    <!-- ── FLASH MESSAGES ── -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}{% for cat,msg in messages %}
-      <div class="flash-msg flash-{{ cat }}"><i class="fas fa-info-circle"></i>{{ msg }}</div>
-      {% endfor %}{% endif %}
+      {% if messages %}
+        {% for cat, msg in messages %}
+          <div class="flash-msg flash-{{ cat }}">
+            <i class="fas fa-info-circle"></i> {{ msg }}
+          </div>
+        {% endfor %}
+      {% endif %}
     {% endwith %}
+
     {% block content %}{% endblock %}
   </div>
 </div>
 
-<!-- LOGOUT POPUP - ADDED ONLY THIS -->
+<!-- LOGOUT POPUP -->
 <div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;">
   <div style="position:absolute;inset:0;background:rgba(10,22,40,0.6);backdrop-filter:blur(4px);" onclick="closeLogout()"></div>
   <div style="position:relative;z-index:1;background:#fff;border-radius:20px;padding:2.5rem 2rem;max-width:400px;width:90%;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,0.25);animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
@@ -80,12 +80,14 @@
     </div>
   </div>
 </div>
+
 <style>
 @keyframes popIn {
   from { opacity:0; transform:scale(0.85) translateY(20px); }
   to { opacity:1; transform:scale(1) translateY(0); }
 }
 </style>
+
 <script>
 function openLogout() { document.getElementById('logoutModal').style.display = 'flex'; }
 function closeLogout() { document.getElementById('logoutModal').style.display = 'none'; }
@@ -96,6 +98,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLogout(); });
+
+  // ── FLASH AUTO HIDE AFTER 5 SECONDS ──
+  setTimeout(function() {
+    document.querySelectorAll('.flash-msg').forEach(function(msg) {
+      msg.style.transition = 'opacity 0.5s ease';
+      msg.style.opacity = '0';
+      setTimeout(function() {
+        if (msg.parentNode) msg.parentNode.removeChild(msg);
+      }, 500);
+    });
+  }, 5000);
 });
 </script>
 

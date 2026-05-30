@@ -58,7 +58,7 @@
   <div class="table-wrap">
     <table id="scheduleTable">
       <thead>
-        <tr><th>#</th><th>Ward Name</th><th>Day</th><th>Start Time</th><th>End Time</th><th>Supply Type</th></tr>
+        <tr><th>#</th><th>Ward Name</th><th>Day</th><th>Start Time</th><th>End Time</th>
       </thead>
       <tbody>
         {% for s in schedules %}
@@ -73,11 +73,7 @@
           </td>
           <td style="font-weight:600;color:#0e63d2;">{{ s.start_time }}</td>
           <td style="font-weight:600;color:#0e63d2;">{{ s.end_time }}</td>
-          <td>
-            <span class="badge {% if s.supply_type=='Regular' %}badge-approved{% elif s.supply_type=='Emergency' %}badge-unpaid{% else %}badge-pending{% endif %}">
-              {{ s.supply_type }}
-            </span>
-          </td>
+          
         </tr>
         {% endfor %}
       </tbody>
@@ -106,7 +102,7 @@ function filterTable() {
     var cells    = row.getElementsByTagName('td');
     var wardName = cells[1].textContent.toLowerCase();
     var dayName  = cells[2].textContent.toLowerCase();
-    var matchSearch = wardName.includes(search) || dayName.includes(search);
+    var matchSearch = wardName.includes(search);
     var matchWard   = ward === '' || wardName.includes(ward);
     var matchDay    = day === '' || dayName.includes(day);
     if (matchSearch && matchWard && matchDay) { row.style.display = ''; visible++; }

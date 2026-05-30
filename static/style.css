@@ -149,7 +149,9 @@ body{font-family:'Inter',sans-serif;background:#f4f7fc;color:#0f1b35;overflow-x:
 .form-label{display:block;font-size:0.78rem;font-weight:700;color:#4a5f80;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
 .input-wrap{position:relative;}
 .input-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ab0cc;font-size:0.9rem;}
-.form-input{width:100%;padding:12px 14px 12px 42px;border:1.5px solid #e0eaf5;border-radius:12px;font-family:'Inter',sans-serif;font-size:0.9rem;color:#0a1628;background:#f8faff;transition:all 0.2s;outline:none;}
+.input-wrap i.fa-eye,
+.input-wrap i.fa-eye-slash{left:auto;right:14px;color:#94a3b8;cursor:pointer;}
+.form-input{width:100%;padding:12px 42px 12px 42px;border:1.5px solid #e0eaf5;border-radius:12px;font-family:'Inter',sans-serif;font-size:0.9rem;color:#0a1628;background:#f8faff;transition:all 0.2s;outline:none;}
 .form-input:focus{border-color:#0e63d2;background:#fff;box-shadow:0 0 0 3px rgba(14,99,210,0.1);}
 select.form-input{padding-left:42px;cursor:pointer;}
 .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
@@ -175,10 +177,36 @@ select.form-input{padding-left:42px;cursor:pointer;}
 /* ══════════════════════════════════════
    FLASH MESSAGES
 ══════════════════════════════════════ */
-.flash-msg{padding:12px 16px;border-radius:10px;margin-bottom:1rem;font-size:0.875rem;display:flex;align-items:center;gap:8px;}
-.flash-danger{background:rgba(220,50,50,0.08);border:1px solid rgba(220,50,50,0.2);color:#dc3232;}
-.flash-success{background:rgba(0,180,140,0.08);border:1px solid rgba(0,180,140,0.2);color:#00b48c;}
-.flash-warning{background:rgba(240,160,0,0.08);border:1px solid rgba(240,160,0,0.2);color:#f0a000;}
+.flash-msg {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flash-success {
+  background: rgba(0,180,140,0.1);
+  color: #00875a;
+  border: 1px solid rgba(0,180,140,0.3);
+}
+.flash-danger {
+  background: rgba(220,50,50,0.1);
+  color: #dc3232;
+  border: 1px solid rgba(220,50,50,0.3);
+}
+.flash-warning {
+  background: rgba(240,160,0,0.1);
+  color: #c07000;
+  border: 1px solid rgba(240,160,0,0.3);
+}
+.flash-info {
+  background: rgba(14,99,210,0.1);
+  color: #0e63d2;
+  border: 1px solid rgba(14,99,210,0.3);
+}
 
 /* ══════════════════════════════════════
    SIDEBAR LAYOUT (Dashboard Pages)
@@ -368,4 +396,46 @@ textarea.field-input{resize:vertical;}
   max-width: 480px;
   margin: auto;
   padding: 2rem 0;
+}
+.flash-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.flash {
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  min-width: 220px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  animation: fadeIn 0.5s ease;
+}
+
+/* Success */
+.flash.success {
+  background: #28a745;
+}
+
+/* Error */
+.flash.error {
+  background: #dc3545;
+}
+
+/* Info */
+.flash.info {
+  background: #007bff;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.input-wrap {
+  overflow: visible !important;
 }

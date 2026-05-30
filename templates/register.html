@@ -8,7 +8,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
 </head>
-<body>
+<body style="margin:0;overflow: hidden;">
 <div class="auth-page">
 
   <!-- LEFT -->
@@ -34,12 +34,6 @@
       <h1>Create Account</h1>
       <p class="sub">Sign up to manage your water supply services</p>
 
-      {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}{% for cat,msg in messages %}
-  <div class="flash-msg flash-{{ cat }}" id="flash-msg"><i class="fas fa-exclamation-circle"></i> {{ msg }}</div>
-  {% endfor %}{% endif %}
-{% endwith %}
-
 <script>
   setTimeout(function() {
     var msg = document.getElementById("flash-msg");
@@ -50,6 +44,16 @@
     }
   }, 3000);
 </script>
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for cat, msg in messages %}
+    <div class="flash-msg flash-{{ cat }}" style="padding:12px 16px;border-radius:10px;margin-bottom:1rem;font-size:0.875rem;font-weight:600;display:flex;align-items:center;gap:8px;{% if cat=='success' %}background:rgba(0,180,140,0.1);color:#00875a;border:1px solid rgba(0,180,140,0.3);{% elif cat=='danger' %}background:rgba(220,50,50,0.1);color:#dc3232;border:1px solid rgba(220,50,50,0.3);{% else %}background:rgba(14,99,210,0.1);color:#0e63d2;border:1px solid rgba(14,99,210,0.3);{% endif %}">
+      <i class="fas fa-info-circle"></i> {{ msg }}
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
       <form method="POST" enctype="multipart/form-data" id="registerForm" novalidate>
 
@@ -149,31 +153,43 @@
         <!-- Password -->
         <div class="form-group">
           <label class="form-label">Password</label>
-          <div class="input-wrap" style="position:relative;">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="password" name="password" class="form-input" placeholder="Min. 8 characters" required style="padding-right:42px;"/>
-            <i class="fas fa-eye" id="togglePass1" onclick="togglePass('password','togglePass1')" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ab0cc;font-size:0.9rem;"></i>
+          <div style="position:relative;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#0e63d2;font-size:0.9rem;z-index:1;">
+              <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" id="password" name="password" class="form-input"
+                placeholder="Min. 8 characters" required
+                style="padding-left:42px;padding-right:42px;"/>
+            <span onclick="togglePass('password','eyePass')"
+                style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;z-index:1;">
+              <i class="fas fa-eye" id="eyePass" style="color:#9ab0cc;font-size:0.9rem;"></i>
+            </span>
           </div>
-          <!-- Password strength bar -->
-          <div style="margin-top:8px;">
-            <div style="height:4px;background:#e8eef8;border-radius:4px;overflow:hidden;">
-              <div id="strengthBar" style="height:100%;width:0%;border-radius:4px;transition:all 0.3s;"></div>
-            </div>
-            <small id="strengthText" style="font-size:0.72rem;font-weight:700;"></small>
-          </div>
-          <small id="passErr" class="val-msg"></small>
         </div>
 
         <!-- Confirm Password -->
         <div class="form-group">
           <label class="form-label">Confirm Password</label>
-          <div class="input-wrap" style="position:relative;">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-input" placeholder="Re-enter your password" required style="padding-right:42px;"/>
-            <i class="fas fa-eye" id="togglePass2" onclick="togglePass('confirm_password','togglePass2')" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ab0cc;font-size:0.9rem;"></i>
+          <div style="position:relative;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#0e63d2;font-size:0.9rem;z-index:1;">
+               <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" id="confirm_password" name="confirm_password" class="form-input"
+                placeholder="Re-enter your password" required
+                style="padding-left:42px;padding-right:42px;"/>
+            <span onclick="togglePass('confirm_password','eyeConfirm')"
+                style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;z-index:1;">
+              <i class="fas fa-eye" id="eyeConfirm" style="color:#9ab0cc;font-size:0.9rem;"></i>
+            </span>
           </div>
-          <p id="passwordMsg" style="font-size:0.75rem;margin-top:5px;display:none;"></p>
-          <small id="confirmErr" class="val-msg"></small>
+        </div>
+
+        <!-- CAPTCHA — same as login page -->
+        <div class="form-group">
+          <img src="/captcha" id="captchaImg" onclick="this.src='/captcha?'+Math.random()" 
+               title="Click to refresh" style="cursor:pointer;border-radius:8px;margin-bottom:6px;"/>
+          <input type="text" name="captcha_input" class="form-input" 
+                 placeholder="Enter CAPTCHA" required/>
         </div>
 
         <button type="submit" class="btn-submit btn-submit-green">
@@ -378,12 +394,38 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
 });
 </script>
 
-<div class="input-wrap" style="position:relative;">
-  <i class="fas fa-lock"></i>
-  <input type="password" name="confirm_password" id="confirm_password" class="form-input" placeholder="Re-enter your password" required style="padding-right:42px;"/>
-  <i class="fas fa-eye" id="togglePass2" onclick="togglePass('confirm_password','togglePass2')" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ab0cc;font-size:0.9rem;"></i>
-</div>
 
 
+<script>
+function togglePass(inputId, iconId) {
+  var input = document.getElementById(inputId);
+  var icon = document.getElementById(iconId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+    icon.style.color = '#0e63d2';
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+    icon.style.color = '#9ab0cc';
+  }
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    document.querySelectorAll('.flash-msg').forEach(function(msg) {
+      msg.style.transition = 'opacity 0.5s ease';
+      msg.style.opacity = '0';
+      setTimeout(function() {
+        if (msg.parentNode) msg.parentNode.removeChild(msg);
+      }, 500);
+    });
+  }, 3000);
+});
+</script>
 </body>
 </html>

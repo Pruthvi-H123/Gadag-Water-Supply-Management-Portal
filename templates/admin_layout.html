@@ -12,6 +12,16 @@
 <div class="layout">
   {% include 'admin_sidebar.html' %}
   <div class="main">
+     <!-- ── FLASH MESSAGES ── -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for cat, msg in messages %}
+        <div class="flash-msg flash-{{ cat }}" id="flash-{{ loop.index }}">
+          <i class="fas fa-info-circle"></i> {{ msg }}
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
     <!-- ── TOP NAVBAR ── -->
     <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:#fff;border-radius:16px;margin-bottom:1.5rem;box-shadow:0 2px 15px rgba(0,0,0,0.06);border:1px solid #f0f4ff;">
@@ -53,13 +63,8 @@
         </a>
       </div>
     </div>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}{% for cat,msg in messages %}
-      <div class="flash-msg flash-{{ cat }}"><i class="fas fa-info-circle"></i>{{ msg }}</div>
-      {% endfor %}{% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
+     {% block content %}{% endblock %}
+     
   </div>
 </div>
 
@@ -98,6 +103,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLogout(); });
+});
+</script>
+
+<script>
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    history.go(1);
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    document.querySelectorAll('.flash-msg').forEach(function(msg) {
+      msg.style.transition = 'opacity 0.5s ease';
+      msg.style.opacity = '0';
+      setTimeout(function() {
+        if (msg.parentNode) msg.parentNode.removeChild(msg);
+      }, 500);
+    });
+  }, 30000);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    document.querySelectorAll('.flash-msg').forEach(function(msg) {
+      msg.style.transition = 'opacity 0.5s ease';
+      msg.style.opacity = '0';
+      setTimeout(function() {
+        if (msg.parentNode) msg.parentNode.removeChild(msg);
+      }, 500);
+    });
+  }, 5000);
 });
 </script>
 

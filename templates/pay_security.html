@@ -1,110 +1,174 @@
-{% extends "user_layout.html" %}
+{% extends 'user_layout.html' %}
+{% block title %}Pay Security Deposit{% endblock %}
 {% block content %}
 
-<div style="max-width:420px;margin:40px auto;background:#fff;border-radius:18px;padding:24px;box-shadow:0 10px 40px rgba(0,0,0,0.08);">
-
-  <h2 style="text-align:center;margin-bottom:10px;">Security Deposit Payment</h2>
-  <p style="text-align:center;color:#666;margin-bottom:20px;">Amount: ₹15,000</p>
-
-  <!-- Simulated QR Code -->
-  <div style="text-align:center;margin-bottom:1.5rem;">
-    <div style="width:180px;height:180px;margin:0 auto 1rem;background:#fff;border:2px solid #e8eef8;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
-      
-      <svg viewBox="0 0 100 100" style="width:100%;height:100%;">
-        <rect width="100" height="100" fill="white"/>
-
-        <!-- QR Boxes -->
-        <rect x="10" y="10" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
-        <rect x="15" y="15" width="15" height="15" fill="#0e63d2"/>
-
-        <rect x="65" y="10" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
-        <rect x="70" y="15" width="15" height="15" fill="#0e63d2"/>
-
-        <rect x="10" y="65" width="25" height="25" fill="none" stroke="#0e63d2" stroke-width="3"/>
-        <rect x="15" y="70" width="15" height="15" fill="#0e63d2"/>
-
-        <!-- Data pattern -->
-        <rect x="40" y="10" width="5" height="5" fill="#0e63d2"/>
-        <rect x="48" y="10" width="5" height="5" fill="#0e63d2"/>
-        <rect x="56" y="10" width="5" height="5" fill="#0e63d2"/>
-        <rect x="40" y="18" width="5" height="5" fill="#0e63d2"/>
-        <rect x="56" y="18" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="40" y="26" width="5" height="5" fill="#0e63d2"/>
-        <rect x="48" y="26" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="10" y="40" width="5" height="5" fill="#0e63d2"/>
-        <rect x="18" y="40" width="5" height="5" fill="#0e63d2"/>
-        <rect x="26" y="40" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="40" y="40" width="5" height="5" fill="#0e63d2"/>
-        <rect x="48" y="40" width="5" height="5" fill="#0e63d2"/>
-        <rect x="56" y="40" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="65" y="40" width="5" height="5" fill="#0e63d2"/>
-        <rect x="73" y="40" width="5" height="5" fill="#0e63d2"/>
-        <rect x="81" y="40" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="10" y="48" width="5" height="5" fill="#0e63d2"/>
-        <rect x="26" y="48" width="5" height="5" fill="#0e63d2"/>
-        <rect x="40" y="48" width="5" height="5" fill="#0e63d2"/>
-        <rect x="56" y="48" width="5" height="5" fill="#0e63d2"/>
-        <rect x="73" y="48" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="10" y="56" width="5" height="5" fill="#0e63d2"/>
-        <rect x="18" y="56" width="5" height="5" fill="#0e63d2"/>
-        <rect x="26" y="56" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="48" y="56" width="5" height="5" fill="#0e63d2"/>
-        <rect x="65" y="56" width="5" height="5" fill="#0e63d2"/>
-        <rect x="81" y="56" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="40" y="65" width="5" height="5" fill="#0e63d2"/>
-        <rect x="56" y="65" width="5" height="5" fill="#0e63d2"/>
-        <rect x="73" y="65" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="40" y="73" width="5" height="5" fill="#0e63d2"/>
-        <rect x="48" y="73" width="5" height="5" fill="#0e63d2"/>
-        <rect x="65" y="73" width="5" height="5" fill="#0e63d2"/>
-        <rect x="81" y="73" width="5" height="5" fill="#0e63d2"/>
-
-        <rect x="40" y="81" width="5" height="5" fill="#0e63d2"/>
-        <rect x="56" y="81" width="5" height="5" fill="#0e63d2"/>
-        <rect x="73" y="81" width="5" height="5" fill="#0e63d2"/>
-      </svg>
-
-    </div>
-
-    <p style="font-size:0.82rem;color:#888;margin-bottom:2px;">Scan QR to pay</p>
-    <p style="font-size:0.75rem;color:#bbb;">UPI ID: gadag.water@upi</p>
+<div class="topbar">
+  <div class="page-title">
+    <h1>Pay Security Deposit</h1>
+    <p>Complete your security deposit payment</p>
   </div>
-
-  <div style="text-align:center;margin-bottom:1rem;font-size:0.8rem;color:#aaa;">
-    — OR select payment method —
-  </div>
-
-  <!-- Payment Form -->
-  <form method="POST">
-    <div style="margin-bottom:15px;">
-      <label>Payment Method</label>
-      <select name="payment_mode" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;" required>
-        <option value="QR Code">QR Code</option>
-        <option value="UPI">UPI</option>
-        <option value="Net Banking">Net Banking</option>
-        <option value="Debit Card">Debit Card</option>
-        <option value="Cash">Cash (Office)</option>
-      </select>
-    </div>
-
-    <div style="background:#e8f7f3;border-radius:10px;padding:10px;margin-bottom:15px;font-size:0.85rem;color:#00916e;">
-      This is a simulated payment for demo purposes.
-    </div>
-
-    <button type="submit" style="width:100%;padding:14px;background:#0e63d2;color:#fff;border:none;border-radius:10px;font-size:1rem;">
-      Confirm Payment — ₹15000
-    </button>
-  </form>
-
+  <a href="/user_dashboard" class="btn btn-outline-blue">
+    <i class="fas fa-arrow-left"></i> Back
+  </a>
 </div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+
+  <!-- DEPOSIT DETAILS -->
+  <div class="card">
+    <div class="card-head">
+      <h3><i class="fas fa-file-invoice" style="color:#0e63d2;"></i> Deposit Details</h3>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0.75rem;">
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4ff;">
+        <span style="font-size:0.82rem;color:#888;font-weight:600;">Request ID</span>
+        <span style="font-size:0.875rem;font-weight:700;color:#0a1628;">#{{ request_id }}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4ff;">
+        <span style="font-size:0.82rem;color:#888;font-weight:600;">Payment Type</span>
+        <span style="font-size:0.875rem;font-weight:700;color:#0a1628;">Security Deposit</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4ff;">
+        <span style="font-size:0.82rem;color:#888;font-weight:600;">Status</span>
+        <span style="font-size:0.875rem;font-weight:700;color:#f0a000;">Pending Admin Approval</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4ff;">
+        <span style="font-size:0.82rem;color:#888;font-weight:600;">Transaction ID</span>
+        <span style="font-size:0.875rem;font-weight:700;color:#0e63d2;">{{ txn_id }}</span>
+      </div>
+      <div style="margin-top:10px;background:linear-gradient(135deg,#0e63d2,#0047ab);color:white;padding:20px;border-radius:12px;text-align:center;">
+        <p style="margin:0;font-size:12px;opacity:0.8;">SECURITY DEPOSIT AMOUNT</p>
+        <h1 style="margin:5px 0;">₹{{ amount }}</h1>
+      </div>
+      <div style="background:rgba(240,160,0,0.08);border:1px solid rgba(240,160,0,0.2);border-radius:10px;padding:12px;font-size:0.82rem;color:#c07000;">
+        <i class="fas fa-info-circle"></i> After payment, admin will review and approve your connection request.
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT -->
+  <div class="card">
+    <div class="card-head">
+      <h3><i class="fas fa-qrcode" style="color:#0e63d2;"></i> Scan & Pay</h3>
+    </div>
+
+    {% if is_paid %}
+    <!-- Already Paid -->
+    <div style="text-align:center;padding:2rem;">
+      <div style="width:80px;height:80px;background:rgba(0,180,140,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:3px solid #00b48c;">
+        <i class="fas fa-check" style="font-size:2rem;color:#00b48c;"></i>
+      </div>
+      <h3 style="font-family:'Sora',sans-serif;font-weight:800;color:#00b48c;margin-bottom:0.5rem;">Deposit Already Paid!</h3>
+      <p style="color:#888;font-size:0.875rem;">Waiting for admin approval.</p>
+      <a href="/user_dashboard" class="btn btn-blue" style="margin-top:1rem;justify-content:center;">
+        <i class="fas fa-home"></i> Go to Dashboard
+      </a>
+    </div>
+    {% else %}
+
+    <!-- STEP 1: Select Payment Mode -->
+    <div id="step1">
+      <form method="POST" onsubmit="startPayment(event)">
+        <input type="hidden" name="txn_id" value="{{ txn_id }}">
+        <div class="field-group">
+          <label class="field-label">Payment Method</label>
+          <select name="payment_mode" id="payment_mode" class="field-input" required>
+            <option value="QR Code">QR Code</option>
+            <option value="UPI">UPI</option>
+            <option value="Net Banking">Net Banking</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Cash">Cash (Office)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-blue" style="width:100%;justify-content:center;padding:13px;font-size:1rem;">
+          <i class="fas fa-arrow-right"></i> Proceed to Pay ₹{{ amount }}
+        </button>
+      </form>
+    </div>
+
+    <!-- STEP 2: QR Code -->
+    <div id="step2" style="display:none;text-align:center;">
+      <div style="background:#f8faff;border:2px solid #e8eef8;border-radius:16px;padding:1.5rem;margin-bottom:1rem;">
+        <p style="font-size:0.72rem;color:#9ab0cc;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Scan QR Code with your phone</p>
+        <img src="{{ qr_url }}"
+          style="border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1);width:180px;height:180px;"/>
+        <p style="font-size:0.75rem;color:#888;margin-top:12px;">UPI ID: gadag.water@upi</p>
+        <p style="font-size:0.72rem;color:#9ab0cc;">Amount: <b style="color:#0e63d2;">₹{{ amount }}</b></p>
+      </div>
+
+      <!-- Instructions -->
+      <div style="background:rgba(14,99,210,0.06);border:1px solid rgba(14,99,210,0.15);border-radius:10px;padding:12px;margin-bottom:1rem;text-align:left;">
+        <p style="font-size:0.8rem;color:#0e63d2;font-weight:700;margin-bottom:8px;"><i class="fas fa-info-circle"></i> How to pay:</p>
+        <p style="font-size:0.78rem;color:#666;line-height:1.8;">
+          1. Open camera on your phone<br>
+          2. Scan the QR code above<br>
+          3. Click <b>Pay Now</b> on your phone<br>
+          4. This page will update automatically ✅
+        </p>
+      </div>
+
+      <!-- Payment Status -->
+      <div id="paymentStatus" style="padding:12px;border-radius:10px;background:#fff8e8;border:1px solid #f0d080;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+          <div class="spinner" style="width:18px;height:18px;border:3px solid #f0a000;border-top:3px solid transparent;border-radius:50%;animation:spin 1s linear infinite;"></div>
+          <p style="font-size:0.85rem;color:#c07000;font-weight:600;">Waiting for payment...</p>
+        </div>
+      </div>
+
+      <button onclick="goBack()" class="btn btn-outline-blue" style="width:100%;justify-content:center;">
+        <i class="fas fa-arrow-left"></i> Change Payment Method
+      </button>
+    </div>
+
+    <!-- STEP 3: Success -->
+    <div id="step3" style="display:none;text-align:center;padding:1rem;">
+      <div style="width:80px;height:80px;background:rgba(0,180,140,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:3px solid #00b48c;">
+        <i class="fas fa-check" style="font-size:2rem;color:#00b48c;"></i>
+      </div>
+      <h3 style="font-family:'Sora',sans-serif;font-weight:800;color:#00b48c;margin-bottom:0.5rem;">Payment Successful!</h3>
+      <p style="color:#888;font-size:0.875rem;margin-bottom:1rem;">Your security deposit has been paid. Waiting for admin approval.</p>
+      <p style="font-size:0.78rem;color:#9ab0cc;">Redirecting to dashboard...</p>
+    </div>
+
+    {% endif %}
+  </div>
+</div>
+
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<script>
+var txn_id = "{{ txn_id }}";
+var pollInterval;
+
+function startPayment(e) {
+  e.preventDefault();
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'block';
+  pollInterval = setInterval(checkPayment, 3000);
+}
+
+function goBack() {
+  clearInterval(pollInterval);
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step1').style.display = 'block';
+}
+
+function checkPayment() {
+  fetch("/check_deposit/" + txn_id)
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "Paid") {
+        clearInterval(pollInterval);
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'block';
+        setTimeout(function() {
+          window.location.href = "/user_dashboard";
+        }, 2000);
+      }
+    });
+}
+</script>
 
 {% endblock %}

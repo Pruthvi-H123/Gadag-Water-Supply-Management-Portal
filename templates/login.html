@@ -8,7 +8,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
 </head>
-<body>
+<body style="margin:10;overflow: hidden;"></body>
 <div class="auth-page">
 
   <!-- LEFT -->
@@ -25,7 +25,7 @@
   </div>
 
   <!-- RIGHT -->
-  <div class="auth-right">
+  <div class="auth-right"  style="overflow-y: auto; padding-bottom: 20px;">
     <div class="auth-form-box">
       <div class="auth-brand">
         <div class="logo"><i class="fas fa-water"></i></div>
@@ -34,12 +34,7 @@
       <h1>Sign In</h1>
       <p class="sub">Enter your credentials to access your account</p>
 
-      {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}{% for cat,msg in messages %}
-  <div class="flash-msg flash-{{ cat }}" id="flash-msg"><i class="fas fa-exclamation-circle"></i> {{ msg }}</div>
-  {% endfor %}{% endif %}
-{% endwith %}
-
+      
 <script>
   setTimeout(function() {
     var msg = document.getElementById("flash-msg");
@@ -50,6 +45,15 @@
     }
   }, 2000);
 </script>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for cat, msg in messages %}
+    <div class="flash-msg flash-{{ cat }}" style="padding:12px 16px;border-radius:10px;margin-bottom:1rem;font-size:0.875rem;font-weight:600;display:flex;align-items:center;gap:8px;{% if cat=='success' %}background:rgba(0,180,140,0.1);color:#00875a;border:1px solid rgba(0,180,140,0.3);{% elif cat=='danger' %}background:rgba(220,50,50,0.1);color:#dc3232;border:1px solid rgba(220,50,50,0.3);{% else %}background:rgba(14,99,210,0.1);color:#0e63d2;border:1px solid rgba(14,99,210,0.3);{% endif %}">
+      <i class="fas fa-info-circle"></i> {{ msg }}
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
       <form method="POST">
         <div class="form-group">
@@ -61,15 +65,43 @@
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
-          <div class="input-wrap">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="password" class="form-input" placeholder="••••••••" required/>
+          <div style="position:relative;">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#0e63d2;font-size:0.9rem;z-index:1;">
+             <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" id="loginPass" name="password" class="form-input" 
+               placeholder="••••••••" required 
+               style="padding-left:42px;padding-right:42px;"/>
+            <span onclick="togglePass('loginPass','eyeLogin')" 
+               style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;z-index:1;">
+             <i class="fas fa-eye" id="eyeLogin" style="color:#9ab0cc;font-size:0.9rem;"></i>
+            </span>
           </div>
         </div>
+        <div>
         <div class="form-row">
           <label class="remember"><input type="checkbox"/> Remember me</label>
           <a href="/forgot_password" class="forgot-link">Forgot password?</a>
         </div>
+
+         </div>
+
+        <div class="form-group">
+          <label class="form-label">Enter CAPTCHA</label>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <img src="/captcha" id="captchaImg"
+                 onclick="this.src='/captcha?'+Math.random()"
+                 title="Click to refresh"
+                 style="height:48px;border-radius:10px;border:1.5px solid #e0eaf5;cursor:pointer;background:#f8faff;"/>
+            <span style="font-size:0.78rem;color:#94a3b8;"><i class="fas fa-redo"></i> Click image to refresh</span>
+          </div>
+          <div class="input-wrap">
+            <i class="fas fa-shield-alt"></i>
+            <input type="text" name="captcha_input" class="form-input"
+                   placeholder="Enter CAPTCHA text" required/>
+          </div>
+        </div>
+
         <button type="submit" class="btn-submit btn-submit-blue">
           <i class="fas fa-sign-in-alt"></i> Sign In
         </button>
@@ -81,5 +113,37 @@
   </div>
 
 </div>
+
+<script>
+function togglePass(inputId, iconId) {
+  var input = document.getElementById(inputId);
+  var icon = document.getElementById(iconId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+    icon.style.color = '#0e63d2';
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+    icon.style.color = '#9ab0cc';
+  }
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    document.querySelectorAll('.flash-msg').forEach(function(msg) {
+      msg.style.transition = 'opacity 0.5s ease';
+      msg.style.opacity = '0';
+      setTimeout(function() {
+        if (msg.parentNode) msg.parentNode.removeChild(msg);
+      }, 500);
+    });
+  }, 3000);
+});
+</script>
 </body>
 </html>

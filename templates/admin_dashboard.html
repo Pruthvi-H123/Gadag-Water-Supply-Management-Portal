@@ -24,4 +24,30 @@
     <a href="/reports" class="btn btn-outline-blue"><i class="fas fa-chart-bar"></i> Reports</a>
   </div>
 </div>
+
+<script>
+var showWelcome = {{ 'true' if show_welcome else 'false' }};
+if (showWelcome) {
+  var toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#f0a000,#c07000);color:#fff;padding:16px 24px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.2);z-index:99999;font-family:Arial,sans-serif;font-weight:700;font-size:0.95rem;max-width:300px;transition:opacity 0.5s ease;';
+  toast.innerHTML = '🛡️ Welcome, {{ session.name }}!<br><span style="font-size:0.78rem;font-weight:400;opacity:0.85;">Logged in successfully</span>';
+  document.body.appendChild(toast);
+  setTimeout(function() {
+    toast.style.opacity = '0';
+    setTimeout(function() { 
+      if (toast.parentNode) toast.parentNode.removeChild(toast); 
+    }, 500);
+  }, 5000);
+}
+</script>
+
+<style>
+@keyframes slideIn {
+  from { opacity:0; transform:translateX(50px); }
+  to { opacity:1; transform:translateX(0); }
+}
+</style>
+
+
+
 {% endblock %}

@@ -8,11 +8,6 @@
 <div class="card" style="max-width:600px;">
   <div class="card-head"><h3><i class="fas fa-plug" style="color:#7c3aed;"></i> Connection Request</h3></div>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}{% for cat,msg in messages %}
-    <div class="flash-msg flash-{{ cat }}"><i class="fas fa-exclamation-circle"></i> {{ msg }}</div>
-    {% endfor %}{% endif %}
-  {% endwith %}
 
   {% if has_connection %}
   <div class="flash-msg flash-warning">

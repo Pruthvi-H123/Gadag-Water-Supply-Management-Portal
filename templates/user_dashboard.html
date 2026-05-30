@@ -15,7 +15,7 @@
     <div>
       <h2 style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;">{{ user.name }}</h2>
       <p style="opacity:0.8;font-size:0.85rem;">{{ user.email }} &nbsp;|&nbsp; {{ user.phone }}</p>
-      <p style="opacity:0.7;font-size:0.8rem;">Ward: {{ user.ward_name or 'Not Assigned' }}</p>
+      <p style="opacity:0.7;font-size:0.8rem;">Ward: {{ user.ward_id or 'Not Assigned' }}</p>
     </div>
   </div>
 </div>
@@ -32,4 +32,27 @@
     <a href="/about" class="qa-btn"><div class="qa-icon" style="color:#0891b2;"><i class="fas fa-info-circle"></i></div><h4>About Portal</h4><p>Learn more about us</p></a>
   </div>
 </div>
+
+<script>
+{% if show_welcome %}
+(function() {
+  var toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#0e63d2,#00b48c);color:#fff;padding:16px 24px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.2);z-index:99999;font-family:Arial,sans-serif;font-weight:700;font-size:0.95rem;max-width:300px;';
+  toast.innerHTML = '✅ Welcome, {{ user.name }}!<br><span style="font-size:0.78rem;font-weight:400;opacity:0.85;">Logged in successfully</span>';
+  document.body.appendChild(toast);
+  setTimeout(function() {
+    toast.style.transition = 'opacity 0.5s';
+    toast.style.opacity = '0';
+    setTimeout(function() { toast.remove(); }, 500);
+  }, 5000);
+})();
+{% endif %}
+</script>
+
+<style>
+@keyframes slideIn {
+  from { opacity:0; transform:translateX(50px); }
+  to { opacity:1; transform:translateX(0); }
+}
+</style>
 {% endblock %}

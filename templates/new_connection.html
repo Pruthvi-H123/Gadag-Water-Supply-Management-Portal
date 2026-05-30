@@ -5,13 +5,6 @@
 
   <h2 style="text-align:center;margin-bottom:15px;">Apply for New Connection</h2>
 
-  <!-- Flash message -->
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <div id="successMessage" style="color:green;margin-bottom:15px;text-align:center;">{{ messages[0] }}</div>
-    {% endif %}
-  {% endwith %}
-
   <form action="{{ url_for('new_connection') }}" method="POST">
     <div style="margin-bottom:15px;">
       <label for="connection_type">Connection Type</label>

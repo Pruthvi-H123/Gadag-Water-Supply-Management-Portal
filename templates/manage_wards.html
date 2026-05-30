@@ -5,7 +5,6 @@
   <div class="page-title"><h1>Manage Wards</h1><p>Add and manage ward details</p></div>
   <a href="/add_ward_page" class="btn btn-blue"><i class="fas fa-plus"></i> Add Ward</a>
 </div>
-{% with messages = get_flashed_messages() %}{% if messages %}{% for msg in messages %}<div class="flash-msg flash-success"><i class="fas fa-check-circle"></i> {{ msg }}</div>{% endfor %}{% endif %}{% endwith %}
 <div class="card">
   <div class="card-head"><h3><i class="fas fa-map-marker-alt" style="color:#0e63d2;"></i> All Wards</h3></div>
   {% if wards %}
